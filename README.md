@@ -1,2 +1,2 @@
-# -intk-google-analytics-dashboard
+# intk-google-analytics-dashboard
 Custom Google Analytics Dashboard.
