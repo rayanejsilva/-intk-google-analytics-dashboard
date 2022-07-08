@@ -1,48 +1,25 @@
-import { useEffect, useState} from 'react'
-import jwt_decode from "jwt-decode";
+import { useState } from "react";
+import { useGoogleLogin } from '@react-oauth/google';
+import {Link, useNavigate} from 'react-router-dom';
 
-const Login = () => {
-  /* store user */
-  const [user, setUser] = useState({});
-  const handleCredentialResponse = (response) => {
-    console.log("Encoded JWT ID token: " + response.credential);
-    let userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    setUser(userObject);
-    document.getElementById("btn__signIn").hidden = true;
-  }
-  const handleSignOut = (event) => {
-    setUser({});
-    document.getElementById("btn__signIn").hidden = false;
+const Login = ({ childToParent }) => {
 
+  const navigate = useNavigate();
 
-  }
-  useEffect(() => {
-    /* global google */
-     google.accounts.id.initialize({
-          client_id: process.env.REACT_APP_CLIENT_ID,
-          callback: handleCredentialResponse,
-        });
-        google.accounts.id.renderButton(
-          document.getElementById("btn__signIn"), 
-          { theme: 'outline', size: 'large' } 
-        )
-  }, [])
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => {
+            navigate('/dashboard', {state: {accessToken: tokenResponse.access_token}});
+        },
+        flow: 'implicit'
+    });
 
-  return (
-    <div className="login__section">
-      <div id='btn__signIn'></div>
-      {Object.keys(user).length !== 0 && <button className="btn__signOut" onClick={(e)  => handleSignOut(e)}>Sign out</button>}
-      
-      {user &&
+    return (
         <div>
-          <img src={user.picture} alt="google login"></img>
-          <h3>{user.name}</h3> 
-
+                <button className="google__btn" onClick={() => login()}>
+                    Sign in with Google 
+                </button>           
         </div>
-      }
-    </div>
-  );
+    );
 }
 
 export default Login;
