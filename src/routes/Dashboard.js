@@ -1,73 +1,56 @@
-import React from 'react';
-import ReactEcharts from "echarts-for-react";
-import {useLocation} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import DataFetcher from "../components/DataFetcher";
+import QueryReport from "../components/QueryReport";
 
-
-//Chart style
-const style = {
-    height: "90vh",
-    width: "95%",
-    paddingTop: '10px',
-    margin: 'auto',
-};
-
-//Chart options
-let option = {
-    title: {
-        text: 'Stacked Line'
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['2021', '2022']
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
-    xAxis: {
-        type: 'category',
-        data: ['01-Jan', '02-Jan', '03-Jan', '04-Jan', '05-Jan', '06-Jan', '07-Jan', '08-Jan']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [
-        {
-            name: '2021',
-            type: 'line',
-            stack: 'Total',
-            data: [320, 332, 301, 334, 390, 330, 320, 1, 2, 3, 4]
-        },
-        {
-            name: '2022',
-            type: 'line',
-            stack: 'Total',
-            data: [820, 932, 901,]
-        }
-    ]
-};
-
-
+const requestBody1 =
+  '{"dimensions":[{"name":"date"}],"metrics":[{"name":"activeUsers"}],"dateRanges":[{"startDate":"2021-01-01","endDate":"2021-12-31"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"}}]}';
+const requestBody2 =
+  '{"dimensions":[{"name":"date"}],"metrics":[{"name":"activeUsers"}],"dateRanges":[{"startDate":"2022-01-01","endDate":"yesterday"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"}}]}';
 
 const Dashboard = () => {
-    const location = useLocation();
-   
-    return (
-        <div>
-            {location.state.accessToken}
-            <ReactEcharts option={option} style={style} className="pie-chart" />
-        </div>
-    )
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [data, setData] = useState("");
+  const [data1, setData1] = useState("");
+  const [data2, setData2] = useState("");
+  const queryReport = new QueryReport(location.state.accessToken);
 
-}
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    if (data === "") {
+      queryReport.getReformattedData().then((result) => setData(result));
+    }
+    /*if (data1 === "") {
+      new DataFetcher(location.state.accessToken, requestBody1)
+        .getData()
+        .then((result) => setData1(result));
+    }
+    if (data2 === "") {
+      new DataFetcher(location.state.accessToken, requestBody2)
+        .getData()
+        .then((result) => setData2(result));
+    }*/
+  });
+
+  return (
+    <div>
+      <div>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
+      {/*{data1 !== "" && (
+        <div>
+          <div>
+            <pre>{JSON.stringify(data1, null, 2)}</pre>
+          </div>
+          <div>
+            <pre>{JSON.stringify(data1, null, 2)}</pre>
+      </div>
+        </div>
+      )}*/}
+    </div>
+  );
+};
 
 export default Dashboard;
