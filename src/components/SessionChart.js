@@ -46,7 +46,7 @@ const SessionChart = () => {
       } else {
          navigate("/", { state: { accessToken: null } });
       }
-   });
+   }, [location.state, reportRequested, navigate]);
 
    return (
       <div className="chart__section">

@@ -1,4 +1,4 @@
-import DataFetcher from "./DataFetcher";
+import DataFetcher from "../utils/DataFetcher";
 
 //Definition of the 2 reports
 class QueryReport {
