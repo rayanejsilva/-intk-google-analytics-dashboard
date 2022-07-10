@@ -3,9 +3,9 @@
 Custom Google Analytics Dashboard based on Google Analytics Data API v1.
 
 <p float="left">
-    <img src="src/assets/homepage.png" alt="homepage" width="200" height="100"/>
-    <img src="src/assets/dashboard-1.png" alt="dashboard" width="200" height="100"/>
-    <img src="src/assets/dashboard-2.png" alt="dashboard" width="200" height="100"/>
+    <img src="src/assets/homepage.png" alt="homepage" width="200" height="110"/>
+    <img src="src/assets/dashboard-1.png" alt="dashboard" width="200" height="110"/>
+    <img src="src/assets/dashboard-2.png" alt="dashboard" width="200" height="110"/>
 </p>
 
 ## Technologies
