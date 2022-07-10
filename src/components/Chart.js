@@ -1,13 +1,15 @@
 import ReactEcharts from "echarts-for-react";
+import NoData from "./NoData";
 //Chart style
 const style = {
    height: "50vh",
    width: "95%",
-   paddingTop: "10px",
+   paddingTop: "20px",
    margin: "auto",
 };
 
 const Chart = (props) => {
+   console.log("hello Chart");
    const option = {
       dataset: [
          {
@@ -67,6 +69,7 @@ const Chart = (props) => {
                x: "Date",
                y: "Value",
             },
+            color: "#8AB3f4",
          },
          {
             type: "line",
@@ -76,13 +79,18 @@ const Chart = (props) => {
                x: "Date",
                y: "Value",
             },
+            color: "#ED7878",
          },
       ],
    };
 
    return (
       <div>
-         <ReactEcharts option={option} style={style} />
+         {props.code === 200 && props.dataset !== undefined ? (
+            <ReactEcharts option={option} style={style} />
+         ) : (
+            <NoData code={props.code} /> //In case we didn't receive data, return an error or a loader
+         )}
       </div>
    );
 };
