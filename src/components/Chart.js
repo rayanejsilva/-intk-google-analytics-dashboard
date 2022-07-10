@@ -9,7 +9,6 @@ const style = {
 };
 
 const Chart = (props) => {
-   console.log("hello Chart");
    const option = {
       dataset: [
          {

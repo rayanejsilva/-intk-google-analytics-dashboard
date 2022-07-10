@@ -14,7 +14,6 @@ const requestSessions2022 =
    '{"dimensions":[{"name":"date"}],"metrics":[{"name":"Sessions"}],"dateRanges":[{"startDate":"2022-01-01","endDate":"yesterday"}],"orderBys":[{"dimension":{"orderType":"ALPHANUMERIC","dimensionName":"date"}}],"keepEmptyRows":true}';
 
 const SessionChart = () => {
-   console.log("hello SessionChart");
    const navigate = useNavigate();
    const location = useLocation();
    const [data, setData] = useState("");
